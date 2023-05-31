@@ -1,10 +1,10 @@
 .colors {
 
-
+color: #111;
 }
 
 * {
-    /* box-sizing: border-box; */
+    box-sizing: border-box;
 }
 
 :root {
@@ -20,16 +20,58 @@ body{
     align-items: center;
 }
 
-/* table {
-    border: 1px solid black;
+ table {
+    border: 1px solid white;
     border-collapse: collapse;
     margin: auto;
-}
+} 
 td {
     width: 50px;
     height: 50px;
     text-align: center;
     transition: 0.5s;
-    border: 2px solid black;
+    border: 2px solid rgb(255, 255, 255);
     background-color: rgb(120, 194, 223);
-} */
+} 
+.cell{
+    width: 40px;
+    height: 40px;
+    background-color: darkgrey;
+}
+img{
+    height: 25px;
+}
+
+.covered{
+background-color: darkgrey;
+}
+.revealed{
+
+background-color: lightgray;
+}
+
+.count1{
+color: blue;
+}
+
+.count2{
+    color: green;
+}
+
+.count3{
+    color: red;
+}
+.count4{
+    color: darkblue;
+}
+
+.modal{
+    /* display: none; */
+    width: 200px;
+    height: 160px;
+    position: absolute;
+    top: 50vh;
+    left: 50vw;
+background-color: aqua;
+color: blueviolet;
+}

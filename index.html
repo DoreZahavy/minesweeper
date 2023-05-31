@@ -1,26 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Minesweeper</title>
     <link rel="stylesheet" href="css/main.css">
 </head>
+
 <body onload="onInit()">
-    <h1>Whats Up!</h1>
+    <h1>Sweep the Mines!</h1>
+    <div>😃</div>
 
     <table>
         <tbody>
+            <!-- <tr>
+                <td onclick=""></td>
+            </tr> -->
             
+
         </tbody>
     </table>
 
+    <div>
+        <button onclick="restart(4,2)">Beginner</button>
+        <button onclick="restart(8,14)">Medium</button>
+        <button onclick="restart(12,32)">Expert</button>
+    </div>
 
+    <div class="modal"></div>
 
 
 
     <script src="js/main.js"></script>
     <script src="js/utils.js"></script>
 </body>
+
 </html>

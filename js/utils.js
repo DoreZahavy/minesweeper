@@ -28,27 +28,27 @@ function getRandomColor() {
     return color
 }
 
-function countNegs(board, rowIdx, colIdx) {
+function countMines(rowIdx, colIdx) {
     var count = 0
 
     for (var i = rowIdx - 1; i <= rowIdx + 1; i++) {
-        if (i < 0 || i >= board.length) continue
+        if (i < 0 || i >= gBoard.length) continue
         for (var j = colIdx - 1; j <= colIdx + 1; j++) {
             if (i === rowIdx && j === colIdx) continue
-            if (j < 0 || j >= board[0].length) continue
-            var currCell = board[i][j]
-            if ('**************') count++
+            if (j < 0 || j >= gBoard[0].length) continue
+            if (gBoard[i][j].isMine) count++
         }
     }
     return count
 }
 
-function findEmptyPoss() {
+// find a random pos that isnt the parameter pos or a mine
+function findEmptyPoss(rowIdx,colIdx) {
 
 	var emptyPoss = []
 	for (var i = 0; i < gBoard.length; i++) {
 		for (var j = 0; j < gBoard[0].length; j++) {
-			if (gBoard[i][j]===' ') {
+			if (!gBoard[i][j].isMine && !(i===rowIdx &&j===colIdx)) {
 				var pos = {
 					i: i,
 					j: j
@@ -86,9 +86,9 @@ function getCellCoord(strCellId) {
     return coord
 }
 
-// {i:2,j:4} => 'cell-2-4'
+// {i:2,j:4} => '.cell-2-4'
 function getClassSelector(location) {
-    return 'cell-' + location.i + '-' + location.j
+    return '.cell-' + location.i + '-' + location.j
 }
 
 // {i:2,j:4} => '#cell-2-4'
