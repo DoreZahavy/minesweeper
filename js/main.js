@@ -1,6 +1,9 @@
 'use strict'
 
-// var deadAudio = new Audio('sounds/dead.mp3')
+var loseAudio = new Audio('sounds/lose.mp3')
+var winAudio = new Audio('sounds/win.mp3')
+var hintAudio = new Audio('sounds/hint.mp3')
+var revealAudio = new Audio('sounds/reveal.mp3')
 
 var gBoard
 var gLevel = {
@@ -101,12 +104,14 @@ function renderBoard() {
 }
 
 function onCellClicked(elCell, rowIdx, colIdx) {
-    if (gGame.hintMode) {
-        console.log('hi')
+    if (gGame.hintMode && !gBoard[rowIdx][colIdx].isShown) {
+        hintAudio.play()
+        // console.log('hi')
         quickReveal(elCell, rowIdx, colIdx)
         return
     }
     if (!document.querySelector(".revealed")) {
+        revealAudio.play()
         putMinesOnBoard(rowIdx, colIdx)
         startTimer()
         gGame.isOn = true
@@ -127,6 +132,7 @@ function onCellClicked(elCell, rowIdx, colIdx) {
         }
     }
     gGame.shownCount++
+    revealAudio.play()
     expandShown(rowIdx, colIdx)
     renderBoard()
     checkGameOver()
@@ -205,10 +211,12 @@ function gameOver(isWin, elCell) {
     // check if win or lose
     elModal.innerText = (isWin) ? 'Congratulations\nYou Win!' : 'Game Over\nTry Again'
     if (isWin) {
+        winAudio.play()
         elModal.innerText = 'Congratulations\nYou Win!'
         elModal.style.color = 'green'
         document.querySelector('[title="How do you do?"]').innerText = '😎'
     } else {
+        loseAudio.play()
         elModal.innerText = 'Game Over\nTry Again'
         elModal.style.color = 'red'
         document.querySelector('[title="How do you do?"]').innerText = '🤯'

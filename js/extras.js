@@ -45,6 +45,8 @@ function hint(elBulb, whichBulb) {
 
 // revealing hinted cell and negs
 function quickReveal(elCell, rowIdx, colIdx) {
+    // if(gBoard[rowIdx][colIdx].isShown) return
+    // hintAudio.play()
     var mem = []
     for (var i = rowIdx - 1; i <= rowIdx + 1; i++) {
         if (i < 0 || i >= gBoard.length) {
