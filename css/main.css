@@ -1,0 +1,35 @@
+.colors {
+
+
+}
+
+* {
+    /* box-sizing: border-box; */
+}
+
+:root {
+    --clrBG: #111;
+    --clrNoZone: gray;
+}
+
+body{
+    background: var(--clrBG);
+    font-family: Arial, Helvetica, sans-serif;
+    color: white;
+    text-align: center;
+    align-items: center;
+}
+
+/* table {
+    border: 1px solid black;
+    border-collapse: collapse;
+    margin: auto;
+}
+td {
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    transition: 0.5s;
+    border: 2px solid black;
+    background-color: rgb(120, 194, 223);
+} */
