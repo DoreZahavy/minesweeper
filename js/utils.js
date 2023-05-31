@@ -128,14 +128,3 @@ function shuffle(items) {
     return items;
 }
 
-function startTimer() {
-    gTimerStart = new Date()
-    gTimerInterval = setInterval(updateTimer, 1)
-}
-
-function updateTimer() {
-    var currTime = new Date()
-    var elTimer = document.querySelector('.timer')
-    // elTimer.style.display = 'block'
-    elTimer.innerText = (currTime.getTime() - gTimerStart.getTime()) / 1000
-}

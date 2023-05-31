@@ -11,30 +11,41 @@
 
 <body onload="onInit()">
     <h1>Sweep the Mines!</h1>
-    <div>😃</div>
+    <div>
+        <span title="Bombs left">002</span>
+        <span title="How do you do?">😃</span>
+        <span title="Timer">000</span>
+    </div>
 
     <table>
         <tbody>
-            <!-- <tr>
-                <td onclick=""></td>
-            </tr> -->
-            
+      
 
         </tbody>
     </table>
 
+    <div class="under-table">
+        <span title="Lives">1</span>♥
+        <span title="Hint" onclick="hint(this,2)"><img src="img/bulb.png"></span>
+        <span title="Hint" onclick="hint(this,3)"><img src="img/bulb.png"></span>
+        <span title="Hint" onclick="hint(this,4)"><img src="img/bulb.png"></span>
+    </div>
+
     <div>
-        <button onclick="restart(4,2)">Beginner</button>
-        <button onclick="restart(8,14)">Medium</button>
-        <button onclick="restart(12,32)">Expert</button>
+        <button class="diff-btn" onclick="restart(4,2)">Beginner</button>
+        <button class="diff-btn" onclick="restart(8,14)">Medium</button>
+        <button class="diff-btn" onclick="restart(12,32)">Expert</button>
     </div>
 
     <div class="modal"></div>
+
+    <div class="footer">Dore Zahavy</div>
 
 
 
     <script src="js/main.js"></script>
     <script src="js/utils.js"></script>
+    <script src="js/extras.js"></script>
 </body>
 
 </html>

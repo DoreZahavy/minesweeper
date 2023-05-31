@@ -1,6 +1,9 @@
 .colors {
 
-color: #111;
+    color: #111;
+    color: #8ba018;
+    color: #207010;
+    color: #fa0f0f;
 }
 
 * {
@@ -9,10 +12,12 @@ color: #111;
 
 :root {
     --clrBG: #111;
-    --clrNoZone: gray;
+    --clrCovered: darkgrey;
+    --clrSwampy: #207010;
+    --clrYellowy: #8ba018;
 }
 
-body{
+body {
     background: var(--clrBG);
     font-family: Arial, Helvetica, sans-serif;
     color: white;
@@ -20,11 +25,12 @@ body{
     align-items: center;
 }
 
- table {
+table {
     border: 1px solid white;
     border-collapse: collapse;
     margin: auto;
-} 
+}
+
 td {
     width: 50px;
     height: 50px;
@@ -32,46 +38,99 @@ td {
     transition: 0.5s;
     border: 2px solid rgb(255, 255, 255);
     background-color: rgb(120, 194, 223);
-} 
-.cell{
+}
+
+.cell {
     width: 40px;
     height: 40px;
     background-color: darkgrey;
+    /* cursor: pointer; */
 }
-img{
+
+
+img {
     height: 25px;
 }
 
-.covered{
-background-color: darkgrey;
-}
-.revealed{
+.covered {
+    /* background-color: darkgrey; */
 
-background-color: lightgray;
-}
+    background: var(--clrCovered);
+    background: linear-gradient(90deg, var(--clrCovered) 0%, rgb(85, 82, 82) 80%);
+    background: -webkit-linear-gradient(90deg, var(--clrCovered) 0%, rgb(85, 82, 82));
+    background: -moz-linear-gradient(90deg, var(--clrCovered) 0%, rgb(85, 82, 82));
 
-.count1{
-color: blue;
 }
 
-.count2{
+.revealed {
+
+    background-color: lightgray;
+}
+
+/* .covered:hover {
+    transition: 0.5s;
+    background-color:#207010;
+} */
+
+.mined {
+    background-color: #fa0f0f;
+}
+
+.count1 {
+    color: blue;
+}
+
+.count2 {
     color: green;
 }
 
-.count3{
+.count3 {
     color: red;
 }
-.count4{
+
+.count4 {
     color: darkblue;
 }
 
-.modal{
-    /* display: none; */
-    width: 200px;
-    height: 160px;
+.under-table {
+    width: 160px;
+    margin: 10px auto;
+    border: 2px white solid;
+    background-color: lightgrey;
+    color: red;
+    font-size: 2em;
+}
+
+.modal {
+    display: none;
     position: absolute;
-    top: 50vh;
-    left: 50vw;
-background-color: aqua;
-color: blueviolet;
+    /* width: 200px; */
+    padding: 30px;
+    border-radius: 20px;
+    top: 130px;
+    left: calc(50% - 115px);
+    background-color: transparent;
+    font-weight: bold;
+    font-size: 2em;
+    color: rgb(247, 13, 13);
+    text-shadow: 4px 3px 8px rgba(0, 0, 0, 1);
+}
+
+.footer {
+    margin-top: 45px;
+    margin-left: 50px;
+    text-align: left;
+}
+
+[title="Hint"] {
+    cursor: pointer;
+}
+
+.diff-btn {
+    padding: 10px;
+    cursor: pointer;
+}
+
+[title="How do you do?"]{
+    margin: 0 33px;
 }
