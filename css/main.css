@@ -3,7 +3,9 @@
     color: #111;
     color: #8ba018;
     color: #207010;
-    color: #fa0f0f;
+    color: #860303;
+    color: rgb(7, 7, 134);
+    color: lightgray;
 }
 
 * {
@@ -12,9 +14,18 @@
 
 :root {
     --clrBG: #111;
-    --clrCovered: darkgrey;
-    --clrSwampy: #207010;
+    --clrBtns: lightgray;
+    --clrBtnsNo: rgb(161, 161, 161);
+    --clrSwampy: #135007;
     --clrYellowy: #8ba018;
+    --clrDarkRed: #a80000;
+    --clrDarkBlue: rgb(7, 7, 134);
+
+    --boxHeight: 30px;
+    --boxMargin: 2px auto;
+    --boxPadding: 7px 10px;
+    --btnRound: 10px;
+    --btnRound2: 2px
 }
 
 body {
@@ -25,57 +36,67 @@ body {
     align-items: center;
 }
 
+/* Upper Area */
+
+.upper-info {
+    margin-bottom: 4px;
+}
+
+[title="How do you do?"] {
+    margin: 0 33px;
+}
+
+/* Board Area */
+
 table {
     border: 1px solid rgb(0, 0, 0);
     border-collapse: collapse;
-    margin: auto;
+    margin: 0 auto 4px;
 }
-#main-table{
-    
+
+#main-table {
+
     background-image: url('../img/bg1.jpg');
     background-size: cover;
 }
 
 td {
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     text-align: center;
     transition: 0.5s;
     border: 2px solid rgb(0, 0, 0);
+    cursor: pointer;
     /* background-color: rgb(120, 194, 223); */
 }
 
 
 
-.cell {
-    width: 40px;
-    height: 40px;
-    /* background-color: transparent; */
-    /* cursor: pointer; */
-    
-    
-}
+/* .cell {
+    cursor: pointer;
+} */
 
 
-.cell img, .under-table img {
+.cell img,
+.under-table img {
     height: 25px;
 }
 
-.covered {
-    /* background-color: darkgrey; */
-    
-    
-    /* background: var(--clrCovered);
+/* .covered { */
+/* background-color: darkgrey; */
+
+
+/* background: var(--clrCovered);
     background: linear-gradient(90deg, var(--clrCovered) 0%, rgb(85, 82, 82) 80%);
     background: -webkit-linear-gradient(90deg, var(--clrCovered) 0%, rgb(85, 82, 82));
     background: -moz-linear-gradient(90deg, var(--clrCovered) 0%, rgb(85, 82, 82)); */
-    
-    
-}
+
+
+/* } */
 
 .revealed {
-
-    background-color: lightgray;
+    cursor: default;
+    background-color: var(--clrBtns);
 }
 
 /* .covered:hover {
@@ -83,41 +104,100 @@ td {
     background-color:#207010;
 } */
 
-.safe{
+/* .safe{
     background-color: aqua;
 }
 
 .mined {
     background-color: #fa0f0f;
-}
+} */
+
+/* Colors of numbers */
 
 .count1 {
-    color: blue;
+    color: var(--clrDarkBlue);
 }
 
 .count2 {
-    color: green;
+    color: var(--clrSwampy);
 }
 
 .count3 {
-    color: red;
+    color: var(--clrDarkRed);
 }
 
 .count4 {
-    color: darkblue;
+    color: rgb(62, 4, 128);
 }
 
-.count5{
-    color: darkred;
+.count5 {
+    color: rgba(71, 36, 6, 0.904);
+}
+
+/* Buttons Area */
+
+.actions {
+    border-style: none;
+    height: var(--boxHeight);
+    padding: var(--boxPadding);
+    margin: var(--boxMargin);
+    cursor: pointer;
+    border-radius: var(--btnRound2);
+    background-color: var(--clrBtns);
+
+}
+
+[title="Exterminate 3 Random Mines"] {
+    display: none;
+    width: 256px;
+    /* cursor: pointer; */
+    margin: 2px auto 4px;
+
+    border-style: none;
+    border-radius: var(--btnRound);
 }
 
 .under-table {
-    width: 160px;
-    margin: 10px auto;
-    border: 2px white solid;
-    background-color: lightgrey;
-    color: red;
-    font-size: 2em;
+    height: var(--boxHeight);
+    margin: var(--boxMargin);
+    
+    /* padding-bottom: 30px; */
+    border-radius: var(--btnRound);
+    /* padding: var(--boxPadding); */
+    width: 256px;
+    /* margin: 10px auto; */
+    /* border: 2px white solid; */
+    background-color: var(--clrBtns);
+    color: var(--clrDarkRed);
+    font-size: 1.4em;
+}
+
+[title="Hint"] {
+    cursor: pointer;
+    padding-top:4px ;
+}
+
+/* [title="Hint"]:nth-child(2){
+    margin-left: 70px;
+} */
+
+[title="Lives"]{
+margin: 2px;
+}
+
+
+
+.diff-btn {
+    border-style: none;
+    height: var(--boxHeight);
+    padding: var(--boxPadding);
+    background-color: var(--clrBtns);
+    /* padding: 7px 10px; */
+    cursor: pointer;
+    width: 82px;
+    margin: var(--boxMargin);
+    border-radius: var(--btnRound2);
+    background-color: var(--clrBtns);
 }
 
 
@@ -125,16 +205,25 @@ td {
 .modal {
     display: none;
     position: absolute;
+    /* background-image: url('../img/win1.png'); */
     /* width: 200px; */
     padding: 30px;
     border-radius: 20px;
     top: 130px;
-    left: calc(50% - 115px);
+    left: calc(50% - 138px);
     background-color: transparent;
     font-weight: bold;
-    font-size: 2em;
-    color: rgb(247, 13, 13);
+    font-size: 2.5em;
+    color: var(--clrDarkRed);
     text-shadow: 4px 3px 8px rgba(0, 0, 0, 1);
+}
+
+.modalWin {
+    /* display: block; */
+    left: calc(50% - 300px);
+    padding: 0;
+    top: 160px;
+    transition: 0.5s;
 }
 
 .footer {
@@ -143,26 +232,12 @@ td {
     text-align: left;
 }
 
-[title="Hint"] {
-    cursor: pointer;
-}
 
-.diff-btn {
-    padding: 10px;
-    cursor: pointer;
-}
 
-[title="How do you do?"]{
-    margin: 0 33px;
-}
-[title="Safety Button"]{
+
+/* [title="Safety Button"]{
 cursor: pointer;
-}
-[title="Mega Hint"]{
+} */
+/* [title="Mega Hint"]{
 cursor: pointer;
-}
-[title="Exterminate 3 Random Mines"]{
-    display: none;
-    cursor: pointer;
-    margin: auto;
-}
+} */

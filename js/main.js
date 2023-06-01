@@ -18,10 +18,15 @@ var gGame = {
     hintMode: 0,
     megaHint: 0,
     safeClicks: 3,
-    exterminate: false
+    exterminate: false,
+    secsPassed: 0
 }
-
+// remember game moves
 var gUndo
+
+// animating win modal
+var gModalDeg
+var gModalInterval
 
 const EMPTY = ' '
 const MINE_IMG = `<img src="img/mine.png">`
@@ -43,6 +48,8 @@ function onInit() {
     reviveBulbs()
 
     gBoard = createBoard(gLevel.size)
+
+    showBesScore()
 
     renderBoard()
 
@@ -203,7 +210,7 @@ function onFlag(elCell, rowIdx, colIdx) {
 
     renderBoard()
 
-updateBombsLeft()
+    updateBombsLeft()
     checkGameOver()
 }
 
@@ -237,44 +244,43 @@ function gameOver(isWin, elCell) {
 
     clearInterval(gTimerInterval)
 
-    var elModal = document.querySelector('.modal')
     // check if win or lose
-    elModal.innerText = (isWin) ? 'Congratulations\nYou Win!' : 'Game Over\nTry Again'
+    // elModal.innerText = (isWin) ? 'Congratulations\nYou Win!' : 'Game Over\nTry Again'
     if (isWin) {
+        saveScore(gLevel.size, gGame.secsPassed)
+        showBesScore()
         winAudio.play()
-        elModal.innerText = 'Congratulations\nYou Win!'
-        elModal.style.color = 'green'
+        winModal()
         document.querySelector('[title="How do you do?"]').innerText = '😎'
     } else {
         loseAudio.play()
-        elModal.innerText = 'Game Over\nTry Again'
-        elModal.style.color = 'red'
+        var elModal = document.querySelector('.modalLose')
+        elModal.style.display = 'block'
+        // elModal.innerText = 'Game Over\nTry Again'
+        // elModal.style.color = 'red'
         document.querySelector('[title="How do you do?"]').innerText = '🤯'
         loseRevealBoard(elCell)
     }
-    elModal.style.display = 'block'
     gGame.isOn = false
 }
 
 // Difficulty button restart the game
 function restart(size, mines) {
-gGame.isOn = false
+    gGame.isOn = false
 
-clearInterval(gTimerInterval)
+    clearInterval(gTimerInterval)
 
     document.querySelector(`[title="Timer"]`).innerText = '000'
     document.querySelector(`[title="Bombs left"]`).innerText = '000'
+    var elExt = document.querySelector(`[title="Exterminate 3 Random Mines"]`)
+    resetBtn(elExt)
     if (mines > 2) {
         gGame.exterminate = true
-        var elExt = document.querySelector(`[title="Exterminate 3 Random Mines"]`)
-        elExt.style.background = 'blue'
         elExt.style.display = 'block'
         gGame.lives = 3
     }
     else {
         gGame.exterminate = false
-        var elExt = document.querySelector(`[title="Exterminate 3 Random Mines"]`)
-        elExt.style.background = 'lightgrey'
         elExt.style.display = 'none'
         gGame.lives = 1
     }
@@ -283,21 +289,43 @@ clearInterval(gTimerInterval)
     gMegaHintPos = null
     gGame.megaHint = 0
 
-    document.querySelector(`[title="Mega Hint"]`).style.background = 'lightgrey'
-
+    resetBtn(document.querySelector(`[title="Mega Hint"]`))
+    
     gLevel.size = size
     gLevel.mines = mines
     // change smiley
     document.querySelector('[title="How do you do?"]').innerText = '😃'
-    document.querySelector('.modal').style.display = 'none'
-
+    document.querySelector('.modalLose').style.display = 'none'
+    document.querySelector('.modalWin').style.display = 'none'
+    
     gGame.safeClicks = 3
-    var elsafeBtn = document.querySelector('[title="Safety Button"] span')
-    elsafeBtn.innerText = gGame.safeClicks
+    resetBtn(document.querySelector(`[title="Safety Button"]`))
+    var elSafeSpan = document.querySelector('[title="Safety Button"] span')
+    elSafeSpan.innerText = gGame.safeClicks
 
     // update bombs left
     document.querySelector(`[title="Bombs left"]`).innerText = String(gLevel.mines).padStart(3, '0')
     onInit()
+}
+
+function winModal() {
+    var elModal = document.querySelector('.modalWin')
+    gModalDeg = 0
+    var elImg = elModal.querySelector('img')
+    gModalInterval = setInterval(animateModal, 10, elModal, elImg)
+
+}
+function animateModal(elModal, elImg) {
+    if (gModalDeg) elModal.style.display = 'block'
+    gModalDeg += 20
+    elImg.style.width = `${gModalDeg * 1.5}px`
+    elModal.style.transform = `rotate(${gModalDeg}deg)`
+    if (gModalDeg === 360) {
+        clearInterval(gModalInterval)
+        gModalDeg = 0
+    }
+
+
 }
 
 

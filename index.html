@@ -11,25 +11,25 @@
 
 <body onload="onInit()">
     <h1>Sweep the Mines!</h1>
-    <button onclick="undoBtn()" title="Undo">Undo</button>
-    <div>
+    <div class="upper-info">
         <span title="Bombs left">002</span>
         <span title="How do you do?">😃</span>
         <span title="Timer">000</span>
     </div>
-
-
+    
+    
     <table id="main-table">
         <tbody>
-
-
+            
+            
         </tbody>
     </table>
-
+    
     <div>
-        <button onclick="safeBtn()" title="Safety Button">Safe Clicks: <span>3</span> left</button>
-        <button onclick="megaBtn()" title="Mega Hint">Mega Hint</button><br>
-        <button onclick="exterminate()" title="Exterminate 3 Random Mines">MINE EXTERMINATOR</button>
+        <button class="actions" onclick="undoBtn()" title="Undo">Undo</button>
+        <button class="actions" onclick="megaBtn()" title="Mega Hint">Mega Hint</button>
+        <button class="actions" onclick="safeBtn()" title="Safety Button">Safe Clicks: <span>3</span> left</button>
+        <button class="actions" onclick="exterminate()" title="Exterminate 3 Random Mines">MINE EXTERMINATOR</button>
     </div>
 
     <div class="under-table">
@@ -45,21 +45,13 @@
         <button class="diff-btn" onclick="restart(12,32)">Expert</button>
     </div>
 
-    <div class="modal"></div>
+    <div class="modal modalLose">Game Over<br>Try Again</div>
+    <div class="modal modalWin"><img src="../img/win1.png"></div>
 
+    <div class="bestScore">Best Score in <span></span> seconds!</div>
     <div class="footer">Dore Zahavy</div>
 
 
-
-    <table id="scores">
-        <!-- <tr>
-            <th colspan="2">Beginner Scores</th>
-            <th colspan="2">Medium Scores</th>
-            <th colspan="2">Expert Scores</th>
-        </tr> -->
-        <!-- <tr></tr>
-        <tr></tr> -->
-    </table>
 
 
     <script src="js/main.js"></script>

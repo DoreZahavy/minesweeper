@@ -21,8 +21,10 @@ function updateTimer() {
     var currTime = new Date()
     var elTimer = document.querySelector(`[title="Timer"]`)
     var timeDiff = currTime.getTime() - gTimerStart.getTime()
-    var timeInSecs = Math.floor(timeDiff / 1000)
-    elTimer.innerText = String(timeInSecs).padStart(3, '0')
+    gGame.secsPassed = Math.floor(timeDiff / 1000)
+    
+    // console.log('gGame.secsPassed:', gGame.secsPassed)
+    elTimer.innerText = String(gGame.secsPassed).padStart(3, '0')
 
 }
 
@@ -105,8 +107,11 @@ function reviveBulbs() {
 function safeBtn() {
     if (!gGame.isOn || !gGame.safeClicks) return
     gGame.safeClicks--
-    var elsafeBtn = document.querySelector('[title="Safety Button"] span')
-    elsafeBtn.innerText = gGame.safeClicks
+    if(!gGame.safeClicks){
+        blockBtn(document.querySelector(`[title="Safety Button"]`))
+    }
+    var elSafeSpan = document.querySelector('[title="Safety Button"] span')
+    elSafeSpan.innerText = gGame.safeClicks
     var randCellPos = findCoveredPos()
     console.log('randCellPos:', randCellPos)
     var classSel = getClassSelector(randCellPos)
@@ -132,7 +137,7 @@ function findCoveredPos() {
     var emptyPoss = []
     for (var i = 0; i < gBoard.length; i++) {
         for (var j = 0; j < gBoard[0].length; j++) {
-            if (!gBoard[i][j].isShown) {
+            if (!gBoard[i][j].isShown && !gBoard[i][j].isMine) {
                 var pos = {
                     i: i,
                     j: j
@@ -219,7 +224,7 @@ function megaHintFunc(rowIdx, colIdx) {
         renderBoard()
         // console.log('mem:', mem)
         gGame.megaHint = -1
-        document.querySelector(`[title="Mega Hint"]`).style.background = 'red'
+        blockBtn(document.querySelector(`[title="Mega Hint"]`))
         console.log('gGame.megaHint:', gGame.megaHint)
 
         setTimeout(endMegaReveal, 2000, mem, endPos, startPos)
@@ -237,8 +242,8 @@ function endMegaReveal(mem, endPos, startPos) {
 }
 
 // Mine Exterminator btn
-function exterminate(){
-    if (!gGame.isOn || gGame.hintMode ||!gGame.exterminate) return
+function exterminate() {
+    if (!gGame.isOn || gGame.hintMode || !gGame.exterminate) return
     if (gGame.megaHint === 1 || gGame.megaHint === 2) return
     var allMinePoss = []
     for (var i = 0; i < gBoard.length; i++) {
@@ -259,46 +264,49 @@ function exterminate(){
         gBoard[randMinePos.i][randMinePos.j].isMine = false
     }
     updateMineCounters()
-    gLevel.mines-=3
+    gLevel.mines -= 3
     updateBombsLeft()
     renderBoard()
 
     gGame.exterminate = false
-    document.querySelector(`[title="Exterminate 3 Random Mines"]`).style.background = 'grey'
-    
+    blockBtn(document.querySelector(`[title="Exterminate 3 Random Mines"]`))
+
 }
+
+
 
 // NOT WORKING LOCAL STORAGE
-function saveScore(mines, name, score) {
+function saveScore(size, score) {
     var diff
-    if (mines === 2) diff = 'Beginner'
-    else if (mines === 14) diff = 'Medium'
-    else if (mines === 32) diff = 'Expert'
-    info = {
-        difficulty: diff,
-        name: name,
-        score: score
-    }
-    localStorage[makeId()] = info
-    renderScoreTable(diff)
+    if (size === 4) diff = 'Beginner'
+    else if (size === 8) diff = 'Medium'
+    else if (size === 12) diff = 'Expert'
+  
+    if (score < localStorage[diff]) localStorage[diff] = score
+    
+    // renderScoreTable(diff)
 
 }
 
-function renderScoreTable(difficulty) {
-    var strHTML = `<tr>
-    <th colspan="2">${difficulty} Scores</th>
-    </tr>`
-
-    for (const id in localStorage) {
-        const info = localStorage[id]
-        console.log('id:', id)
-        console.log('info:', info)
-        if (info.difficulty === difficulty)
-            strHTML += `<tr><td>${info.name}</td><td>${info.score}</td></tr>`
-    }
-    document.querySelector(`#score`).innerHTML = strHTML
+function showBesScore(){
+    var diff
+    if (gLevel.size === 4) diff = 'Beginner'
+    else if (gLevel.size === 8) diff = 'Medium'
+    else if (gLevel.size === 12) diff = 'Expert'
+    var elSpan = document.querySelector(`.bestScore span`)
+    elSpan.innerText = `${diff}: ${localStorage[diff]}`
 }
-// Store
 
-// Retrieve
-// document.getElementById("result").innerHTML = localStorage.getItem("lastname");
+function resetBtn(elBtn){
+    elBtn.style.background = 'var(--clrBtns)'
+    elBtn.style.cursor = 'pointer'
+}
+
+function blockBtn(elBtn){
+    elBtn.style.background = `var(--clrBtnsNo)`
+    elBtn.style.cursor = 'not-allowed'
+
+}
+
+
+
