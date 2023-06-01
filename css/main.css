@@ -26,9 +26,14 @@ body {
 }
 
 table {
-    border: 1px solid white;
+    border: 1px solid rgb(0, 0, 0);
     border-collapse: collapse;
     margin: auto;
+}
+#main-table{
+    
+    background-image: url('../img/bg1.jpg');
+    background-size: cover;
 }
 
 td {
@@ -36,30 +41,36 @@ td {
     height: 50px;
     text-align: center;
     transition: 0.5s;
-    border: 2px solid rgb(255, 255, 255);
-    background-color: rgb(120, 194, 223);
+    border: 2px solid rgb(0, 0, 0);
+    /* background-color: rgb(120, 194, 223); */
 }
+
+
 
 .cell {
     width: 40px;
     height: 40px;
-    background-color: darkgrey;
+    /* background-color: transparent; */
     /* cursor: pointer; */
+    
+    
 }
 
 
-img {
+.cell img, .under-table img {
     height: 25px;
 }
 
 .covered {
     /* background-color: darkgrey; */
-
-    background: var(--clrCovered);
+    
+    
+    /* background: var(--clrCovered);
     background: linear-gradient(90deg, var(--clrCovered) 0%, rgb(85, 82, 82) 80%);
     background: -webkit-linear-gradient(90deg, var(--clrCovered) 0%, rgb(85, 82, 82));
-    background: -moz-linear-gradient(90deg, var(--clrCovered) 0%, rgb(85, 82, 82));
-
+    background: -moz-linear-gradient(90deg, var(--clrCovered) 0%, rgb(85, 82, 82)); */
+    
+    
 }
 
 .revealed {
@@ -71,6 +82,10 @@ img {
     transition: 0.5s;
     background-color:#207010;
 } */
+
+.safe{
+    background-color: aqua;
+}
 
 .mined {
     background-color: #fa0f0f;
@@ -92,6 +107,10 @@ img {
     color: darkblue;
 }
 
+.count5{
+    color: darkred;
+}
+
 .under-table {
     width: 160px;
     margin: 10px auto;
@@ -100,6 +119,8 @@ img {
     color: red;
     font-size: 2em;
 }
+
+
 
 .modal {
     display: none;
@@ -133,4 +154,15 @@ img {
 
 [title="How do you do?"]{
     margin: 0 33px;
+}
+[title="Safety Button"]{
+cursor: pointer;
+}
+[title="Mega Hint"]{
+cursor: pointer;
+}
+[title="Exterminate 3 Random Mines"]{
+    display: none;
+    cursor: pointer;
+    margin: auto;
 }

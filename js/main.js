@@ -15,15 +15,26 @@ var gGame = {
     shownCount: 0,
     markedCount: 0,
     lives: 1,
-    hintMode: 0
+    hintMode: 0,
+    megaHint: 0,
+    safeClicks: 3,
+    exterminate: false
 }
+
+var gUndo
 
 const EMPTY = ' '
 const MINE_IMG = `<img src="img/mine.png">`
 const FLAG = '🚩'
 
+// localStorage.clear()
 
 function onInit() {
+
+    gUndo = []
+
+    gGame.exterminate = true
+
     // gGame.isOn = true
     gGame.shownCount = 0
     gGame.markedCount = 0
@@ -32,9 +43,11 @@ function onInit() {
     reviveBulbs()
 
     gBoard = createBoard(gLevel.size)
-    console.log('gBoard:', gBoard)
+
     renderBoard()
 
+    // saveScore(gLevel.mines, 'Moshe', 29)
+    // saveScore(gLevel.mines, 'Daniel', 24)
 
 }
 
@@ -48,7 +61,8 @@ function createBoard(size) {
                 minesAroundCount: -1,
                 isShown: false,
                 isMine: false,
-                isMarked: false
+                isMarked: false,
+                isSafe: false
             }
         }
     }
@@ -88,9 +102,11 @@ function renderBoard() {
                 else cellContent = (gBoard[i][j].minesAroundCount) ? gBoard[i][j].minesAroundCount : EMPTY
             } else if (gBoard[i][j].isMarked) cellContent = FLAG
 
-            var cellStatus = (gBoard[i][j].isShown) ? 'revealed' : 'covered'
+            var cellStatus = (gBoard[i][j].isShown) ? 'revealed' : 'covered' //covered
             var mineCount = gBoard[i][j].minesAroundCount
-            var classList = `class="cell cell-${i}-${j} ${cellStatus} count${mineCount}"`
+            var safeMark = (gBoard[i][j].isSafe) ? ' safe' : ''
+            var classList = `class="cell cell-${i}-${j} ${cellStatus} count${mineCount}${safeMark}"`
+
             strHTML += `<td ${classList} 
             oncontextmenu="onFlag(this, ${i},${j})" 
             onClick="onCellClicked(this, ${i},${j})">
@@ -104,6 +120,11 @@ function renderBoard() {
 }
 
 function onCellClicked(elCell, rowIdx, colIdx) {
+    // console.log('gGame.megaHint:', gGame.megaHint)
+    if (gGame.megaHint === 1 || gGame.megaHint === 2) {
+        megaHintFunc(rowIdx, colIdx)
+        return
+    }
     if (gGame.hintMode && !gBoard[rowIdx][colIdx].isShown) {
         hintAudio.play()
         // console.log('hi')
@@ -121,18 +142,21 @@ function onCellClicked(elCell, rowIdx, colIdx) {
     var currCell = gBoard[rowIdx][colIdx]
     if (currCell.isMarked || currCell.isShown) return
     else if (currCell.isMine) {
+        saveBoard()
         gBoard[rowIdx][colIdx].isShown = true
+
         renderBoard()
         gGame.lives--
         document.querySelector(`[title="Lives"]`).innerText = gGame.lives
         if (!gGame.lives) {
 
             gameOver(false, elCell)
-            return
         }
+        return
     }
     gGame.shownCount++
     revealAudio.play()
+    saveBoard()
     expandShown(rowIdx, colIdx)
     renderBoard()
     checkGameOver()
@@ -167,6 +191,7 @@ function onFlag(elCell, rowIdx, colIdx) {
     if (!gGame.isOn) return
     var currCell = gBoard[rowIdx][colIdx]
     if (currCell.isShown) return
+    saveBoard()
     if (currCell.isMarked) {
         currCell.isMarked = false
         gGame.markedCount--
@@ -175,12 +200,17 @@ function onFlag(elCell, rowIdx, colIdx) {
         currCell.isMarked = true
         gGame.markedCount++
     }
+
     renderBoard()
-    document.querySelector(`[title="Bombs left"]`).innerText =
-        String(gLevel.mines - gGame.markedCount).padStart(3, '0')
+
+updateBombsLeft()
     checkGameOver()
 }
 
+function updateBombsLeft() {
+    document.querySelector(`[title="Bombs left"]`).innerText =
+        String(gLevel.mines - gGame.markedCount).padStart(3, '0')
+}
 
 function disableContextMenu() {
     for (var i = 0; i < gBoard.length; i++) {
@@ -228,17 +258,43 @@ function gameOver(isWin, elCell) {
 
 // Difficulty button restart the game
 function restart(size, mines) {
+gGame.isOn = false
+
+clearInterval(gTimerInterval)
+
     document.querySelector(`[title="Timer"]`).innerText = '000'
     document.querySelector(`[title="Bombs left"]`).innerText = '000'
-    if (mines > 2) gGame.lives = 3
-    else gGame.lives = 1
+    if (mines > 2) {
+        gGame.exterminate = true
+        var elExt = document.querySelector(`[title="Exterminate 3 Random Mines"]`)
+        elExt.style.background = 'blue'
+        elExt.style.display = 'block'
+        gGame.lives = 3
+    }
+    else {
+        gGame.exterminate = false
+        var elExt = document.querySelector(`[title="Exterminate 3 Random Mines"]`)
+        elExt.style.background = 'lightgrey'
+        elExt.style.display = 'none'
+        gGame.lives = 1
+    }
     document.querySelector(`[title="Lives"]`).innerText = gGame.lives
+
+    gMegaHintPos = null
+    gGame.megaHint = 0
+
+    document.querySelector(`[title="Mega Hint"]`).style.background = 'lightgrey'
 
     gLevel.size = size
     gLevel.mines = mines
     // change smiley
     document.querySelector('[title="How do you do?"]').innerText = '😃'
     document.querySelector('.modal').style.display = 'none'
+
+    gGame.safeClicks = 3
+    var elsafeBtn = document.querySelector('[title="Safety Button"] span')
+    elsafeBtn.innerText = gGame.safeClicks
+
     // update bombs left
     document.querySelector(`[title="Bombs left"]`).innerText = String(gLevel.mines).padStart(3, '0')
     onInit()

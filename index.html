@@ -11,18 +11,26 @@
 
 <body onload="onInit()">
     <h1>Sweep the Mines!</h1>
+    <button onclick="undoBtn()" title="Undo">Undo</button>
     <div>
         <span title="Bombs left">002</span>
         <span title="How do you do?">😃</span>
         <span title="Timer">000</span>
     </div>
 
-    <table>
+
+    <table id="main-table">
         <tbody>
-      
+
 
         </tbody>
     </table>
+
+    <div>
+        <button onclick="safeBtn()" title="Safety Button">Safe Clicks: <span>3</span> left</button>
+        <button onclick="megaBtn()" title="Mega Hint">Mega Hint</button><br>
+        <button onclick="exterminate()" title="Exterminate 3 Random Mines">MINE EXTERMINATOR</button>
+    </div>
 
     <div class="under-table">
         <span title="Lives">1</span>♥
@@ -41,6 +49,17 @@
 
     <div class="footer">Dore Zahavy</div>
 
+
+
+    <table id="scores">
+        <!-- <tr>
+            <th colspan="2">Beginner Scores</th>
+            <th colspan="2">Medium Scores</th>
+            <th colspan="2">Expert Scores</th>
+        </tr> -->
+        <!-- <tr></tr>
+        <tr></tr> -->
+    </table>
 
 
     <script src="js/main.js"></script>

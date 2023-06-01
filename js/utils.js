@@ -55,15 +55,11 @@ function findEmptyPoss(rowIdx,colIdx) {
 				}
 				emptyPoss.push(pos)
 			}
-
 		}
 	}
-	// console.log('emptyPoss:', emptyPoss)
 	const randIdx = getRandomInt(0, emptyPoss.length)
-	// console.log('randIdx:', randIdx)
 	const randPos = emptyPoss[randIdx]
 	return randPos
-
 }
 
 function isEmptyCell(coord) {
