@@ -4,6 +4,7 @@ var loseAudio = new Audio('sounds/lose.mp3')
 var winAudio = new Audio('sounds/win.mp3')
 var hintAudio = new Audio('sounds/hint.mp3')
 var revealAudio = new Audio('sounds/reveal.mp3')
+var wrongAudio = new Audio('sounds/wrong.mp3')
 
 var gBoard
 var gLevel = {
@@ -148,23 +149,26 @@ function onCellClicked(elCell, rowIdx, colIdx) {
 
     var currCell = gBoard[rowIdx][colIdx]
     if (currCell.isMarked || currCell.isShown) return
-    else if (currCell.isMine) {
+    if (currCell.isMine) {
         saveBoard()
         gBoard[rowIdx][colIdx].isShown = true
 
         renderBoard()
+        gGame.markedCount++
+        updateBombsLeft()
         gGame.lives--
         document.querySelector(`[title="Lives"]`).innerText = gGame.lives
         if (!gGame.lives) {
 
             gameOver(false, elCell)
-        }
+        } else wrongAudio.play()
         return
     }
     gGame.shownCount++
     revealAudio.play()
     saveBoard()
     expandShown(rowIdx, colIdx)
+
     renderBoard()
     checkGameOver()
 }
@@ -228,7 +232,6 @@ function disableContextMenu() {
     }
 }
 
-
 function checkGameOver() {
     // console.log('gGame.markedCount:', gGame.markedCount)
     // console.log('gGame.shownCount:', gGame.shownCount)
@@ -290,14 +293,14 @@ function restart(size, mines) {
     gGame.megaHint = 0
 
     resetBtn(document.querySelector(`[title="Mega Hint"]`))
-    
+
     gLevel.size = size
     gLevel.mines = mines
     // change smiley
     document.querySelector('[title="How do you do?"]').innerText = '😃'
     document.querySelector('.modalLose').style.display = 'none'
     document.querySelector('.modalWin').style.display = 'none'
-    
+
     gGame.safeClicks = 3
     resetBtn(document.querySelector(`[title="Safety Button"]`))
     var elSafeSpan = document.querySelector('[title="Safety Button"] span')

@@ -63,18 +63,17 @@ table {
 td {
     width: 40px;
     height: 40px;
+    font-size: 1rem;
+    /* font-weight: bold; */
     text-align: center;
     transition: 0.5s;
-    border: 2px solid rgb(0, 0, 0);
+    border: 1px solid rgb(0, 0, 0);
     cursor: pointer;
-    /* background-color: rgb(120, 194, 223); */
+    box-shadow: inset -1px -1px 1px 0px rgb(7, 7, 7);
 }
 
 
 
-/* .cell {
-    cursor: pointer;
-} */
 
 
 .cell img,
@@ -82,35 +81,13 @@ td {
     height: 25px;
 }
 
-/* .covered { */
-/* background-color: darkgrey; */
-
-
-/* background: var(--clrCovered);
-    background: linear-gradient(90deg, var(--clrCovered) 0%, rgb(85, 82, 82) 80%);
-    background: -webkit-linear-gradient(90deg, var(--clrCovered) 0%, rgb(85, 82, 82));
-    background: -moz-linear-gradient(90deg, var(--clrCovered) 0%, rgb(85, 82, 82)); */
-
-
-/* } */
 
 .revealed {
     cursor: default;
     background-color: var(--clrBtns);
+    box-shadow: none;
 }
 
-/* .covered:hover {
-    transition: 0.5s;
-    background-color:#207010;
-} */
-
-/* .safe{
-    background-color: aqua;
-}
-
-.mined {
-    background-color: #fa0f0f;
-} */
 
 /* Colors of numbers */
 
@@ -137,6 +114,7 @@ td {
 /* Buttons Area */
 
 .actions {
+    box-shadow: inset -2px -2px 4px 0px rgb(58, 57, 57);
     border-style: none;
     height: var(--boxHeight);
     padding: var(--boxPadding);
@@ -158,15 +136,13 @@ td {
 }
 
 .under-table {
+    box-shadow: inset -2px -2px 4px 0px rgb(58, 57, 57);
+
     height: var(--boxHeight);
     margin: var(--boxMargin);
     
-    /* padding-bottom: 30px; */
     border-radius: var(--btnRound);
-    /* padding: var(--boxPadding); */
     width: 256px;
-    /* margin: 10px auto; */
-    /* border: 2px white solid; */
     background-color: var(--clrBtns);
     color: var(--clrDarkRed);
     font-size: 1.4em;
@@ -177,9 +153,6 @@ td {
     padding-top:4px ;
 }
 
-/* [title="Hint"]:nth-child(2){
-    margin-left: 70px;
-} */
 
 [title="Lives"]{
 margin: 2px;
@@ -188,6 +161,7 @@ margin: 2px;
 
 
 .diff-btn {
+    box-shadow: inset -2px -2px 4px 0px rgb(58, 57, 57);
     border-style: none;
     height: var(--boxHeight);
     padding: var(--boxPadding);
@@ -235,9 +209,3 @@ margin: 2px;
 
 
 
-/* [title="Safety Button"]{
-cursor: pointer;
-} */
-/* [title="Mega Hint"]{
-cursor: pointer;
-} */

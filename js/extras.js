@@ -7,7 +7,7 @@ var gTimerInterval
 
 var gMegaHintPos
 
-const SAFE_MARK = '😁'
+const SAFE_MARK = `<img src="../img/safe-sign.png">` //'😁'
 
 
 
@@ -38,7 +38,6 @@ function loseRevealBoard(elCell) {
         }
     }
     renderBoard()
-    // elCell.classList.add("mined")
     // console.log('hi')
 }
 
@@ -103,7 +102,6 @@ function reviveBulbs() {
 
 }
 
-
 function safeBtn() {
     if (!gGame.isOn || !gGame.safeClicks) return
     gGame.safeClicks--
@@ -113,14 +111,13 @@ function safeBtn() {
     var elSafeSpan = document.querySelector('[title="Safety Button"] span')
     elSafeSpan.innerText = gGame.safeClicks
     var randCellPos = findCoveredPos()
-    console.log('randCellPos:', randCellPos)
+    // console.log('randCellPos:', randCellPos)
     var classSel = getClassSelector(randCellPos)
-    console.log('classSel:', classSel)
+    // console.log('classSel:', classSel)
     var randCell = document.querySelector(`${classSel}`)
-    // randCell.classList.add('mark')
-    // gBoard[randCellPos.i][randCellPos.j].isSafe = true
     var content = randCell.innerText
-    randCell.innerText = SAFE_MARK
+    // console.log('content:', content)
+    randCell.innerHTML = SAFE_MARK
     // renderBoard()
     setTimeout(unmark, 2000, randCell, content)
 }
@@ -131,7 +128,6 @@ function unmark(randCell, content) {
     // renderBoard()
 }
 
-// TODO: FIX FOR SAFE BTN
 function findCoveredPos() {
 
     var emptyPoss = []
@@ -154,6 +150,10 @@ function findCoveredPos() {
 // Undo last change
 function undoBtn() {
     if (!gGame.isOn || !gUndo.length) return
+
+gGame.shownCount=0
+gGame.markedCount=0
+
     var board = gUndo.shift()
     console.log('gUndo.length:', gUndo.length)
     console.log('gUndo:', gUndo)
@@ -167,8 +167,14 @@ function undoBtn() {
                 isMarked: board[i][j].isMarked,
                 isSafe: board[i][j].isSafe
             }
+            if(gBoard[i][j].isMarked) gGame.markedCount++
+            if(gBoard[i][j].isShown){
+                if(gBoard[i][j].isMine) gGame.markedCount++
+                else gGame.shownCount++
+            }
         }
     }
+    updateBombsLeft()
     renderBoard()
 }
 
@@ -273,9 +279,7 @@ function exterminate() {
 
 }
 
-
-
-// NOT WORKING LOCAL STORAGE
+// Saving score when winning
 function saveScore(size, score) {
     var diff
     if (size === 4) diff = 'Beginner'
