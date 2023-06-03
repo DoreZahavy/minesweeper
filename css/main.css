@@ -1,5 +1,8 @@
 .colors {
 
+    color: rgb(228, 218, 213);
+    color: rgb(5, 29, 3);
+    color: #705139;
     color: #111;
     color: #8ba018;
     color: #207010;
@@ -13,8 +16,10 @@
 }
 
 :root {
+    --clrMainText: white;
     --clrBG: #111;
     --clrBtns: lightgray;
+    --clrRevealed: lightgray;
     --clrBtnsNo: rgb(161, 161, 161);
     --clrSwampy: #135007;
     --clrYellowy: #8ba018;
@@ -31,12 +36,14 @@
 body {
     background: var(--clrBG);
     font-family: Arial, Helvetica, sans-serif;
-    color: white;
+    color: var(--clrMainText);
     text-align: center;
     align-items: center;
+    transition: 0.3s;
 }
 
 /* Upper Area */
+
 
 .upper-info {
     margin-bottom: 4px;
@@ -44,6 +51,46 @@ body {
 
 [title="How do you do?"] {
     margin: 0 33px;
+}
+
+/* Manual and color modes  */
+
+.mode-btns {
+    position: absolute;
+    left: 15px;
+}
+
+.manualBtn {
+    margin-bottom: 14px;
+    width: 130px;
+}
+
+.mode {
+    /* padding: var(--boxPadding); */
+    height: var(--boxHeight);
+    margin-top: 4px;
+    border-radius: 6px;
+    width: 84px;
+}
+
+.darkMode {
+    background-color: #111;
+    border: 2px solid lightgray;
+    color: white;
+}
+
+.lightMode {
+
+    background-color: #FAF9F6;
+    border: 2px solid var(--clrBtnsNo);
+    color: black;
+}
+
+.forestMode {
+
+    background-color: rgb(5, 29, 3);
+    border: 2px solid #705139;
+    color: #FAF9F6;
 }
 
 /* Board Area */
@@ -84,7 +131,7 @@ td {
 
 .revealed {
     cursor: default;
-    background-color: var(--clrBtns);
+    background-color: var(--clrRevealed);
     box-shadow: none;
 }
 
@@ -140,7 +187,7 @@ td {
 
     height: var(--boxHeight);
     margin: var(--boxMargin);
-    
+
     border-radius: var(--btnRound);
     width: 256px;
     background-color: var(--clrBtns);
@@ -150,12 +197,12 @@ td {
 
 [title="Hint"] {
     cursor: pointer;
-    padding-top:4px ;
+    padding-top: 4px;
 }
 
 
-[title="Lives"]{
-margin: 2px;
+[title="Lives"] {
+    margin: 2px;
 }
 
 
@@ -205,7 +252,3 @@ margin: 2px;
     margin-left: 50px;
     text-align: left;
 }
-
-
-
-

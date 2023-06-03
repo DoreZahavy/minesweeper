@@ -20,7 +20,8 @@ var gGame = {
     megaHint: 0,
     safeClicks: 3,
     exterminate: false,
-    secsPassed: 0
+    secsPassed: 0,
+    isManual: false
 }
 // remember game moves
 var gUndo
@@ -37,6 +38,7 @@ const FLAG = '🚩'
 
 function onInit() {
 
+
     gUndo = []
 
     gGame.exterminate = true
@@ -47,10 +49,10 @@ function onInit() {
     // console.log('hi')
 
     reviveBulbs()
-
+    // if (!gGame.isManual)
     gBoard = createBoard(gLevel.size)
 
-    showBesScore()
+    showBestScore()
 
     renderBoard()
 
@@ -58,7 +60,6 @@ function onInit() {
     // saveScore(gLevel.mines, 'Daniel', 24)
 
 }
-
 
 function createBoard(size) {
     var board = []
@@ -128,6 +129,10 @@ function renderBoard() {
 }
 
 function onCellClicked(elCell, rowIdx, colIdx) {
+    if (gGame.isManual && gLevel.mines > gManualCount) {
+        buildManualBombs(rowIdx, colIdx)
+        return
+    }
     // console.log('gGame.megaHint:', gGame.megaHint)
     if (gGame.megaHint === 1 || gGame.megaHint === 2) {
         megaHintFunc(rowIdx, colIdx)
@@ -140,10 +145,15 @@ function onCellClicked(elCell, rowIdx, colIdx) {
         return
     }
     if (!document.querySelector(".revealed")) {
-        revealAudio.play()
-        putMinesOnBoard(rowIdx, colIdx)
+        // revealAudio.play()
+        if (!gGame.isManual) putMinesOnBoard(rowIdx, colIdx)
+        else {
+            gManualCount = 0
+            updateMineCounters()
+        }
         startTimer()
         gGame.isOn = true
+        gGame.isManual = false
     }
     if (!gGame.isOn) return
 
@@ -245,13 +255,14 @@ function checkGameOver() {
 // Both Win and Lose
 function gameOver(isWin, elCell) {
 
+    updateManualBtn()
     clearInterval(gTimerInterval)
 
     // check if win or lose
     // elModal.innerText = (isWin) ? 'Congratulations\nYou Win!' : 'Game Over\nTry Again'
     if (isWin) {
         saveScore(gLevel.size, gGame.secsPassed)
-        showBesScore()
+        showBestScore()
         winAudio.play()
         winModal()
         document.querySelector('[title="How do you do?"]').innerText = '😎'
@@ -294,6 +305,7 @@ function restart(size, mines) {
 
     resetBtn(document.querySelector(`[title="Mega Hint"]`))
 
+
     gLevel.size = size
     gLevel.mines = mines
     // change smiley
@@ -318,6 +330,7 @@ function winModal() {
     gModalInterval = setInterval(animateModal, 10, elModal, elImg)
 
 }
+
 function animateModal(elModal, elImg) {
     if (gModalDeg) elModal.style.display = 'block'
     gModalDeg += 20

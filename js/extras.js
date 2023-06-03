@@ -7,6 +7,8 @@ var gTimerInterval
 
 var gMegaHintPos
 
+var gManualCount = 0
+
 const SAFE_MARK = `<img src="../img/safe-sign.png">` //'😁'
 
 
@@ -22,7 +24,7 @@ function updateTimer() {
     var elTimer = document.querySelector(`[title="Timer"]`)
     var timeDiff = currTime.getTime() - gTimerStart.getTime()
     gGame.secsPassed = Math.floor(timeDiff / 1000)
-    
+
     // console.log('gGame.secsPassed:', gGame.secsPassed)
     elTimer.innerText = String(gGame.secsPassed).padStart(3, '0')
 
@@ -105,7 +107,7 @@ function reviveBulbs() {
 function safeBtn() {
     if (!gGame.isOn || !gGame.safeClicks) return
     gGame.safeClicks--
-    if(!gGame.safeClicks){
+    if (!gGame.safeClicks) {
         blockBtn(document.querySelector(`[title="Safety Button"]`))
     }
     var elSafeSpan = document.querySelector('[title="Safety Button"] span')
@@ -151,8 +153,8 @@ function findCoveredPos() {
 function undoBtn() {
     if (!gGame.isOn || !gUndo.length) return
 
-gGame.shownCount=0
-gGame.markedCount=0
+    gGame.shownCount = 0
+    gGame.markedCount = 0
 
     var board = gUndo.shift()
     console.log('gUndo.length:', gUndo.length)
@@ -167,9 +169,9 @@ gGame.markedCount=0
                 isMarked: board[i][j].isMarked,
                 isSafe: board[i][j].isSafe
             }
-            if(gBoard[i][j].isMarked) gGame.markedCount++
-            if(gBoard[i][j].isShown){
-                if(gBoard[i][j].isMine) gGame.markedCount++
+            if (gBoard[i][j].isMarked) gGame.markedCount++
+            if (gBoard[i][j].isShown) {
+                if (gBoard[i][j].isMine) gGame.markedCount++
                 else gGame.shownCount++
             }
         }
@@ -201,14 +203,14 @@ function saveBoard() {
 function megaBtn() {
     if (!gGame.isOn || gGame.hintMode) return
     if (gGame.megaHint === -1 || gGame.megaHint === 2) return
-    console.log('gGame.megaHint:', gGame.megaHint)
+    // console.log('gGame.megaHint:', gGame.megaHint)
     gGame.megaHint = 1
-    console.log('gGame.megaHint:', gGame.megaHint)
+    // console.log('gGame.megaHint:', gGame.megaHint)
 }
 
 // clicking on a cell after hitting mega hint btn
 function megaHintFunc(rowIdx, colIdx) {
-    console.log('gGame.megaHint:', gGame.megaHint)
+    // console.log('gGame.megaHint:', gGame.megaHint)
     // console.log('gGame.megaHint:', gGame.megaHint)
     if (gGame.megaHint === 1) {
         gMegaHintPos = { i: rowIdx, j: colIdx }
@@ -285,14 +287,14 @@ function saveScore(size, score) {
     if (size === 4) diff = 'Beginner'
     else if (size === 8) diff = 'Medium'
     else if (size === 12) diff = 'Expert'
-  
+
     if (score < localStorage[diff]) localStorage[diff] = score
-    
+
     // renderScoreTable(diff)
 
 }
 
-function showBesScore(){
+function showBestScore() {
     var diff
     if (gLevel.size === 4) diff = 'Beginner'
     else if (gLevel.size === 8) diff = 'Medium'
@@ -301,16 +303,63 @@ function showBesScore(){
     elSpan.innerText = `${diff}: ${localStorage[diff]}`
 }
 
-function resetBtn(elBtn){
+function resetBtn(elBtn) {
     elBtn.style.background = 'var(--clrBtns)'
     elBtn.style.cursor = 'pointer'
 }
 
-function blockBtn(elBtn){
+function blockBtn(elBtn) {
     elBtn.style.background = `var(--clrBtnsNo)`
     elBtn.style.cursor = 'not-allowed'
 
 }
 
+// Manual Mode Button
+function manualMode() {
+    if (gLevel.mines === 11 || gLevel.mines === 29) gLevel.mines += 3
+    // start manual mode
+    if (!gGame.isManual) {
+        gGame.isManual = true
+        // createBoard(gGame.size)
+    }
+    else {
+        // cancel manual mode
+        gGame.isManual = false
+    }
+    gManualCount = 0
+    restart(gLevel.size, gLevel.mines)
+    updateManualBtn()
+}
 
+function buildManualBombs(rowIdx, colIdx) {
+    if (gBoard[rowIdx][colIdx].isMine) return
+    gBoard[rowIdx][colIdx].isMine = true
+    gManualCount++
+    updateManualBtn()
+}
 
+function updateManualBtn() {
+    var elBtnSpan = document.querySelector('.manualBtn span')
+    if (gLevel.mines === gManualCount) {
+        // gManualCount = 0
+        // gGame.isManual = false
+        elBtnSpan.innerText = 'Ready!'
+    } else {
+        elBtnSpan.innerText = (gGame.isManual) ? `ON ${gManualCount}/${gLevel.mines}` : 'OFF'
+    }
+}
+
+function darkMode() {
+    document.documentElement.style.cssText =
+        " --clrMainText:white; --clrBG: #111; --clrRevealed: lightgray"
+}
+
+function lightMode() {
+    document.documentElement.style.cssText =
+        " --clrMainText:black; --clrBG: #FAF9F6; --clrRevealed: rgb(161, 161, 161)"
+}
+
+function forestMode(){
+    document.documentElement.style.cssText = 
+    " --clrMainText: #FAF9F6; --clrBG: rgb(5, 29, 3); --clrRevealed: #705139"
+}
