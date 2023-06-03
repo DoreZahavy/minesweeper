@@ -284,6 +284,10 @@ function restart(size, mines) {
 
     clearInterval(gTimerInterval)
 
+    gGame.isManual = false
+    gManualCount = 0
+    updateManualBtn()
+
     document.querySelector(`[title="Timer"]`).innerText = '000'
     document.querySelector(`[title="Bombs left"]`).innerText = '000'
     var elExt = document.querySelector(`[title="Exterminate 3 Random Mines"]`)

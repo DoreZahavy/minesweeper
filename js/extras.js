@@ -319,16 +319,17 @@ function blockBtn(elBtn) {
 function manualMode() {
     if (gLevel.mines === 11 || gLevel.mines === 29) gLevel.mines += 3
     // start manual mode
+    gManualCount = 0
     if (!gGame.isManual) {
+        restart(gLevel.size, gLevel.mines)
         gGame.isManual = true
         // createBoard(gGame.size)
     }
     else {
         // cancel manual mode
+        restart(gLevel.size, gLevel.mines)
         gGame.isManual = false
     }
-    gManualCount = 0
-    restart(gLevel.size, gLevel.mines)
     updateManualBtn()
 }
 
