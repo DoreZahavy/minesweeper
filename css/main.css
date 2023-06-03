@@ -62,7 +62,13 @@ body {
 
 .manualBtn {
     margin-bottom: 14px;
-    width: 130px;
+    width: 90px;
+    height: 50px;
+    cursor: pointer;
+    box-shadow: inset -2px -2px 4px 0px rgb(58, 57, 57);
+    border-radius: var(--btnRound2);
+    background-color: var(--clrBtns);
+    border-style: none;
 }
 
 .mode {
@@ -70,7 +76,7 @@ body {
     height: var(--boxHeight);
     margin-top: 4px;
     border-radius: 6px;
-    width: 84px;
+    width: 90px;
 }
 
 .darkMode {

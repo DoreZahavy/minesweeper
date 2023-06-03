@@ -288,7 +288,7 @@ function saveScore(size, score) {
     else if (size === 8) diff = 'Medium'
     else if (size === 12) diff = 'Expert'
 
-    if (score < localStorage[diff]) localStorage[diff] = score
+    if (score < localStorage[diff] || !localStorage[diff]) localStorage[diff] = score
 
     // renderScoreTable(diff)
 
@@ -300,7 +300,8 @@ function showBestScore() {
     else if (gLevel.size === 8) diff = 'Medium'
     else if (gLevel.size === 12) diff = 'Expert'
     var elSpan = document.querySelector(`.bestScore span`)
-    elSpan.innerText = `${diff}: ${localStorage[diff]}`
+    if(!localStorage[diff]) elSpan.innerText = ` ${diff}: No Score`
+    else elSpan.innerText = `${diff}: ${localStorage[diff]} Seconds!`
 }
 
 function resetBtn(elBtn) {
