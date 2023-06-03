@@ -9,7 +9,7 @@ var gMegaHintPos
 
 var gManualCount = 0
 
-const SAFE_MARK = `<img src="../img/safe-sign.png">` //'😁'
+// const SAFE_MARK = `<img src="img/safe-sign.png">` //'😁'
 
 
 
@@ -119,7 +119,7 @@ function safeBtn() {
     var randCell = document.querySelector(`${classSel}`)
     var content = randCell.innerText
     // console.log('content:', content)
-    randCell.innerHTML = SAFE_MARK
+    randCell.innerHTML = `<img src="img/safe-sign.png">`
     // renderBoard()
     setTimeout(unmark, 2000, randCell, content)
 }
