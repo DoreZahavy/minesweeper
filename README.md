@@ -26,5 +26,6 @@ If you have any questions or suggestions, feel free to contact me:
 * Dore Zahavy
 * Email: dorezahavy@gmail.com
 * GitHub: https://github.com/DoreZahavy
+* Linkedin: www.linkedin.com/in/dore-zahavy
 
 <img src="img/minesweeper.jpg">
