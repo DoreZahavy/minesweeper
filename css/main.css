@@ -1,5 +1,4 @@
 .colors {
-
     color: rgb(228, 218, 213);
     color: rgb(5, 29, 3);
     color: #705139;
@@ -42,9 +41,6 @@ body {
     transition: 0.3s;
 }
 
-/* Upper Area */
-
-
 .upper-info {
     margin-bottom: 4px;
 }
@@ -72,7 +68,6 @@ body {
 }
 
 .mode {
-    /* padding: var(--boxPadding); */
     height: var(--boxHeight);
     margin-top: 4px;
     border-radius: 6px;
@@ -86,14 +81,12 @@ body {
 }
 
 .lightMode {
-
     background-color: #FAF9F6;
     border: 2px solid var(--clrBtnsNo);
     color: black;
 }
 
 .forestMode {
-
     background-color: rgb(5, 29, 3);
     border: 2px solid #705139;
     color: #FAF9F6;
@@ -108,7 +101,6 @@ table {
 }
 
 #main-table {
-
     background-image: url('../img/bg1.jpg');
     background-size: cover;
 }
@@ -117,7 +109,6 @@ td {
     width: 40px;
     height: 40px;
     font-size: 1rem;
-    /* font-weight: bold; */
     text-align: center;
     transition: 0.5s;
     border: 1px solid rgb(0, 0, 0);
@@ -125,22 +116,16 @@ td {
     box-shadow: inset -1px -1px 1px 0px rgb(7, 7, 7);
 }
 
-
-
-
-
 .cell img,
 .under-table img {
     height: 25px;
 }
-
 
 .revealed {
     cursor: default;
     background-color: var(--clrRevealed);
     box-shadow: none;
 }
-
 
 /* Colors of numbers */
 
@@ -175,25 +160,20 @@ td {
     cursor: pointer;
     border-radius: var(--btnRound2);
     background-color: var(--clrBtns);
-
 }
 
 [title="Exterminate 3 Random Mines"] {
     display: none;
     width: 256px;
-    /* cursor: pointer; */
     margin: 2px auto 4px;
-
     border-style: none;
     border-radius: var(--btnRound);
 }
 
 .under-table {
     box-shadow: inset -2px -2px 4px 0px rgb(58, 57, 57);
-
     height: var(--boxHeight);
     margin: var(--boxMargin);
-
     border-radius: var(--btnRound);
     width: 256px;
     background-color: var(--clrBtns);
@@ -206,12 +186,9 @@ td {
     padding-top: 4px;
 }
 
-
 [title="Lives"] {
     margin: 2px;
 }
-
-
 
 .diff-btn {
     box-shadow: inset -2px -2px 4px 0px rgb(58, 57, 57);
@@ -219,7 +196,6 @@ td {
     height: var(--boxHeight);
     padding: var(--boxPadding);
     background-color: var(--clrBtns);
-    /* padding: 7px 10px; */
     cursor: pointer;
     width: 82px;
     margin: var(--boxMargin);
@@ -227,13 +203,9 @@ td {
     background-color: var(--clrBtns);
 }
 
-
-
 .modal {
     display: none;
     position: absolute;
-    /* background-image: url('../img/win1.png'); */
-    /* width: 200px; */
     padding: 30px;
     border-radius: 20px;
     top: 130px;
@@ -246,7 +218,6 @@ td {
 }
 
 .modalWin {
-    /* display: block; */
     left: calc(50% - 300px);
     padding: 0;
     top: 160px;
